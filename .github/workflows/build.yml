@@ -12,12 +12,14 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - name: Setup NodeJS and Build
+      - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
+
+      - name: Build project
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -25,7 +27,6 @@ jobs:
           npm run build
           npm run lint
           npm run test:unit
-
       - name: Code Coverage Report
         uses: SonarSource/sonarcloud-github-action@master
         env:
